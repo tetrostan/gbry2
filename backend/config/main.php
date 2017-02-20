@@ -44,7 +44,12 @@ return [
             'rules' => [
             ],
         ],
-        */
+        'urlManagerFrontend' => [
+            // конфигурация менеджера URL из frontend
+        ],*/
     ],
     'params' => $params,
 ];
+
+// получить URL, указывающий на frontend:
+//echo Yii::$app->urlManagerFrontend->createUrl(...);
