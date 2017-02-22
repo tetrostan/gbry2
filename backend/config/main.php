@@ -9,11 +9,13 @@ $params = array_merge(
 return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
-    'controllerNamespace' => 'backend\controllers',
+    'homeUrl' => '/admin',
     'bootstrap' => ['log'],
+    'controllerNamespace' => 'backend\controllers',
     'modules' => [],
     'components' => [
         'request' => [
+            'baseUrl' => '/admin',
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
@@ -37,13 +39,12 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
-        ],
+        ],/*
         'urlManagerFrontend' => [
             // конфигурация менеджера URL из frontend
         ],*/
