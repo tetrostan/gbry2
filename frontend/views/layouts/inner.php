@@ -1,12 +1,10 @@
-<?
+<?php
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 
 \frontend\assets\MainAsset::register($this);
 ?>
-<?
-  $this->beginPage();
-?>
+<?php $this->beginPage(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,44 +15,28 @@ use yii\bootstrap\Nav;
 </head>
 
 <body>
-
-<?
- $this->beginBody();
-?>
-
+<?php $this->beginBody(); ?>
 <!-- Header Starts -->
-  <? echo $this->render("//common/head") ?>
+<?php echo $this->render("//common/head") ?>
 <!-- #Header Starts -->
 
 <div class="inside-banner">
     <div class="container">
-        <span class="pull-right"><a href="#">Home</a> / <?=$this->title ?></span>
-        <h2><?=$this->title ?></h2>
+        <span class="pull-right"><a href="#">Home</a> / <?= $this->title ?></span>
+        <h2><?= $this->title ?></h2>
     </div>
 </div>
 <!-- banner -->
-
 <!-- banner -->
 <div class="container">
     <div class="spacer">
         <?= __FILE__ ?>
-        <?=$content ?>
+        <?= $content ?>
     </div>
 </div>
-
-
-
-        <? echo $this->render("//common/footer") ?>
-
-<?
-$this->endBody();
-?>
-
-
+<?php echo $this->render("//common/footer") ?>
+<?php $this->endBody(); ?>
 </body>
 </html>
-
-<?
-$this->endPage();
-?>
+<?php $this->endPage(); ?>
 
