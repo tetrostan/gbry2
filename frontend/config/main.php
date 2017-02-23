@@ -5,40 +5,38 @@ $params = array_merge(
     require(__DIR__ . '/params.php'),
     require(__DIR__ . '/params-local.php')
 );
-
 // set custom alias
 // Yii::setAlias('@test', '@frontend/test');
-
 return [
-    'id'                  => 'app-frontend',
-    'basePath'            => dirname(__DIR__),
-    'homeUrl'             => '/',
-    'bootstrap'           => ['log'],
+    'id' => 'app-frontend',
+    'basePath' => dirname(__DIR__),
+    'homeUrl' => '/',
+    'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
-    'modules'             => [
+    'modules' => [
         'main' => [
             'class' => 'app\modules\main\Module',
         ],
     ],
-    'components'          => [
-        'request'      => [
-            'baseUrl'   => '',
+    'components' => [
+        'request' => [
+            'baseUrl' => '',
             'csrfParam' => '_csrf-frontend',
         ],
-        'user'         => [
-            'identityClass'   => 'common\models\User',
+        'user' => [
+            'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'identityCookie'  => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
-        'session'      => [
+        'session' => [
             // this is the name of the session cookie used for login on the frontend
             'name' => 'advanced-frontend',
         ],
-        'log'          => [
+        'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets'    => [
+            'targets' => [
                 [
-                    'class'  => 'yii\log\FileTarget',
+                    'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
             ],
@@ -47,12 +45,12 @@ return [
             'errorAction' => 'site/error',
         ],
         /**/
-        'urlManager'   => [
+        'urlManager' => [
             'enablePrettyUrl' => true,
-            'showScriptName'  => false,
-            'rules'           => [
+            'showScriptName' => false,
+            'rules' => [
             ],
         ],
     ],
-    'params'              => $params,
+    'params' => $params,
 ];
