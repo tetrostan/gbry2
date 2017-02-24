@@ -39,4 +39,3 @@ use yii\bootstrap\Nav;
 </body>
 </html>
 <?php $this->endPage(); ?>
-

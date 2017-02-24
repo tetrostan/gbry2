@@ -1,9 +1,6 @@
 <div class="footer">
-
+    <?= __FILE__ ?>
     <div class="container">
-
-
-
         <div class="row">
             <div class="col-lg-3 col-sm-3">
                 <h4>Information</h4>
@@ -40,6 +37,4 @@
             </div>
         </div>
         <p class="copyright">Copyright 2013. All rights reserved.	</p>
-
-
     </div></div>

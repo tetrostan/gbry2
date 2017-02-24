@@ -1,4 +1,4 @@
-<div class="">DefaultController
+<div class="">
     <?= __FILE__ ?>
     <div id="slider" class="sl-slider-wrapper">
         <div class="sl-slider">
@@ -63,8 +63,6 @@
             </div>
         </div><!-- /sl-slider -->
 
-
-
         <nav id="nav-dots" class="nav-dots">
             <span class="nav-dot-current"></span>
             <span></span>
@@ -75,8 +73,6 @@
 
     </div><!-- /slider-wrapper -->
 </div>
-
-
 
 <div class="banner-search">
     <div class="container">
@@ -115,12 +111,11 @@
                             <button class="btn btn-success"  onclick="window.location.href='buysalerent.html'">Find Now</button>
                         </div>
                     </div>
-
-
                 </div>
                 <div class="col-lg-5 col-lg-offset-1 col-sm-6 ">
                     <p>Join now and get updated with all the properties deals.</p>
-                    <button class="btn btn-info"   data-toggle="modal" data-target="#loginpop">Login</button>        </div>
+                    <button class="btn btn-info"   data-toggle="modal" data-target="#loginpop">Login</button>
+                </div>
             </div>
         </div>
     </div>
@@ -217,7 +212,6 @@
                 <div class="listing-detail"><span data-toggle="tooltip" data-placement="bottom" data-original-title="Bed Room">5</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Living Room">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Parking">2</span> <span data-toggle="tooltip" data-placement="bottom" data-original-title="Kitchen">1</span> </div>
                 <a class="btn btn-primary" href="javascript:if(confirm(%27http://thebootstrapthemes.com/live/thebootstrapthemes-realestate/property-detail.php  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a path excluded by the site\%27s Robot Exclusion parameters.  (Teleport Pro\%27s compliance with this system is optional; see the Project Properties, Netiquette page.)  \n\nDo you want to open it from the server?%27))window.location=%27http://thebootstrapthemes.com/live/thebootstrapthemes-realestate/property-detail.php%27" >View Details</a>
             </div>
-
         </div>
     </div>
     <div class="spacer">
@@ -225,7 +219,6 @@
             <div class="col-lg-6 col-sm-9 recent-view">
                 <h3>About Us</h3>
                 <p>The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.<br><a href="about.html" >Learn More</a></p>
-
             </div>
             <div class="col-lg-5 col-lg-offset-1 col-sm-3 recommended">
                 <h3>Recommended Properties</h3>
