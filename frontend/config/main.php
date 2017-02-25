@@ -23,6 +23,10 @@ return [
             'baseUrl' => '',
             'csrfParam' => '_csrf-frontend',
         ],
+        // компонент common работает как сервис локатор
+        'common' => [
+            'class' => 'frontend\components\Common',
+        ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
