@@ -45,9 +45,8 @@ class SignupForm extends Model
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios['short_register1'] = ['username' ,'email', 'password', 'repassword'];
-        $scenarios['short_register2'] = ['username' ,'email'];
-        $scenarios['short_register3'] = ['email', 'password'];
+        //        $scenarios['short_register1'] = ['email', 'password'];
+//        $scenarios['short_register2'] = ['username' ,'email'];
 
         return $scenarios;
     }
