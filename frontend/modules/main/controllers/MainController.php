@@ -20,8 +20,8 @@ class MainController extends Controller
             ],
             'test' => [
                 'class' => 'frontend\actions\TestAction',
-//                'viewName' => 'test1',
-            ]
+                //                'viewName' => 'test1',
+            ],
         ];
     }
 
@@ -32,7 +32,11 @@ class MainController extends Controller
 
     public function actionRegister()
     {
-        $model = new SignupForm();
+        // 1 variant scenario
+        $model = new SignupForm(['scenario' => 'short_register1']);
+        // 2 variant scenario
+//        $model = new SignupForm();
+//        $model->scenario = 'short_register1';
         if (\Yii::$app->request->isAjax && \Yii::$app->request->isPost) {
             \Yii::$app->response->format = Response::FORMAT_JSON;
 
