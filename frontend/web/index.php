@@ -8,7 +8,8 @@ require(__DIR__ . '/../config/bootstrap.php');
 $config = yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/../../common/config/main.php'),
     // /../../common/config/main-local.php перекрывает настройки /../config/main.php
-    require(__DIR__ . '/../../common/config/main-local.php'),
+// вместо /../../common/config/main-local.php используем common/config/db.php
+//    require(__DIR__ . '/../../common/config/main-local.php'),
     require(__DIR__ . '/../config/main.php'),
     require(__DIR__ . '/../config/main-local.php')
 );

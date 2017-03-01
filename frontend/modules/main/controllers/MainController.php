@@ -39,13 +39,16 @@ class MainController extends Controller
         //        $model = new SignupForm();
         //        $model->scenario = 'short_register1';
         if (\Yii::$app->request->isAjax && \Yii::$app->request->isPost) {
-            \Yii::$app->response->format = Response::FORMAT_JSON;
+            if ($model->load(\Yii::$app->request->post())) {
+                \Yii::$app->response->format = Response::FORMAT_JSON;
 
-            return ActiveForm::validate($model);
+                return ActiveForm::validate($model);
+            }
         }
         if ($model->load(\Yii::$app->request->post()) && $model->signup()) {
-            print_r($model->getAttributes());
-            die;
+//            print_r($model->getAttributes());
+//            die;
+            \Yii::$app->session->setflash('success', 'Register Success');
         }
 
         return $this->render('register', ['model' => $model]);

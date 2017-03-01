@@ -17,6 +17,9 @@ use yii\bootstrap\Nav;
 
 <body>
 <?php $this->beginBody() ?>
+<?php if (Yii::$app->session->hasFlash('success')) : ?>
+    <?php Yii::$app->session->getFlash('success') ?>
+<?php endif; ?>
 
 <!-- через $this обращаемся к классу View-->
 <!-- `//` означает что мы находимся в папке frontend/views-->
