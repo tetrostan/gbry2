@@ -16,24 +16,21 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $this->layout = 'bootstrap'; // only home page
-
         return $this->render('index');
     }
 
     public function actionEvent()
     {
-//        $component = new Common();
-// если common подключен в конфиг. файле (main.php в данном случае)
+        //        $component = new Common();
+        // если common подключен в конфиг. файле (main.php в данном случае)
         $component = \Yii::$app->common;
-
         // подключение обработчика
         $component->on(Common::EVENT_NOTIFY, [$component, 'notifyAdmin']);
         // можно привязывать другие события
         // которые запускаются одной командой через триггер
-//        $component->on(Common::EVENT_NOTIFY, [$component, 'notifyAdmin2']);
-//        $component->on(Common::EVENT_NOTIFY, [$component, 'notifyAdmin3']);
+        //        $component->on(Common::EVENT_NOTIFY, [$component, 'notifyAdmin2']);
+        //        $component->on(Common::EVENT_NOTIFY, [$component, 'notifyAdmin3']);
         $component->sendMail('test@domain.com', 'Test', 'Test text');
-
         // отключение обработчика
         $component->off(Common::EVENT_NOTIFY, [$component, 'notifyAdmin']);
     }
@@ -53,5 +50,11 @@ class DefaultController extends Controller
         // E:/OpenServer/domains/gbry2.loc/www/frontend/web
         //        print \Yii::getAlias('@webroot');
         //        print \Yii::getAlias('@test');
+    }
+
+    public function actionLoginData()
+    {
+        // Get any data from User table (for debug)
+//        print \Yii::$app->user->identity->username;
     }
 }
