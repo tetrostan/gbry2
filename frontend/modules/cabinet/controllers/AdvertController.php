@@ -73,6 +73,15 @@ class AdvertController extends AuthController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        // for frontend/modules/cabinet/views/advert/_form.php
+        // 1 variant
+        /*
+        $data = [];
+        foreach ($model as $row) {
+            $data[] = $row->title;
+        }*/
+        // 2 variant
+        // $model = $this->findModel($id)->asArray;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idadvert]);
         } else {
