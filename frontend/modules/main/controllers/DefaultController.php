@@ -3,6 +3,7 @@ namespace app\modules\main\controllers;
 
 use frontend\components\Common;
 use yii\web\Controller;
+use yii\db\Query;
 
 /**
  * Default controller for the `main` module
@@ -16,7 +17,12 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $this->layout = 'bootstrap'; // only home page
-        return $this->render('index');
+        $query = new Query();
+        $command = $query->from('advert')->orderBy('idadvert desc')->limit(5);
+        $result_general = $command->all();
+        $count_general = $command->count();
+
+        return $this->render('index', ['result_general' => $result_general, 'count_general' => $count_general]);
     }
 
     public function actionEvent()
@@ -55,6 +61,6 @@ class DefaultController extends Controller
     public function actionLoginData()
     {
         // Get any data from User table (for debug)
-//        print \Yii::$app->user->identity->username;
+        //        print \Yii::$app->user->identity->username;
     }
 }
