@@ -61,6 +61,14 @@ class DefaultController extends Controller
     public function actionLoginData()
     {
         // Get any data from User table (for debug)
-        //        print \Yii::$app->user->identity->username;
+        print \Yii::$app->user->identity->username;
+    }
+
+    // custom cache action
+    public function actionCacheTest()
+    {
+        $locator = \Yii::$app->locator;
+        $locator->cache->set('test', 1);
+        print $locator->cache->get('test');
     }
 }
