@@ -1,5 +1,5 @@
 <div class="footer">
-    <?= __FILE__ ?>
+    <?//= __FILE__ ?>
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-sm-3">

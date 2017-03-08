@@ -43,7 +43,7 @@ use yii\bootstrap\Nav;
 <!-- banner -->
 <div class="container">
     <div class="spacer">
-        <?= __FILE__ ?>
+        <?//= __FILE__ ?>
         <?= $content ?>
     </div>
 </div>

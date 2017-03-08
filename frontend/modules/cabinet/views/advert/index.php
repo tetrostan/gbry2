@@ -1,12 +1,10 @@
 <?php
-
 use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\Search\AdvertSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
 $this->title = 'Adverts';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -23,17 +21,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'idadvert',
             'price',
             'address',
-            'fk_agent_detail',
-            'badroom',
-            // 'livingroom',
-            // 'parking',
-            // 'kitchen',
+            'fk_agent',
+            'bedroom',
+            'livingroom',
+            'parking',
+            'kitchen',
             // 'general_image',
-            // 'advertcol',
             // 'description:ntext',
             // 'location',
             // 'hot',
@@ -42,7 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'recommend',
             // 'created_at',
             // 'updated_at',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

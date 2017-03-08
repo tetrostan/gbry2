@@ -18,8 +18,8 @@ class AdvertSearch extends Advert
     public function rules()
     {
         return [
-            [['idadvert', 'price', 'fk_agent_detail', 'badroom', 'livingroom', 'parking', 'kitchen', 'hot', 'sold', 'recommend', 'created_at', 'updated_at'], 'integer'],
-            [['address', 'general_image', 'advertcol', 'description', 'location', 'type'], 'safe'],
+            [['idadvert', 'price', 'fk_agent', 'bedroom', 'livingroom', 'parking', 'kitchen', 'hot', 'sold', 'recommend', 'created_at', 'updated_at'], 'integer'],
+            [['address', 'general_image', 'description', 'location', 'type'], 'safe'],
         ];
     }
 
@@ -61,8 +61,8 @@ class AdvertSearch extends Advert
         $query->andFilterWhere([
             'idadvert' => $this->idadvert,
             'price' => $this->price,
-            'fk_agent_detail' => $this->fk_agent_detail,
-            'badroom' => $this->badroom,
+            'fk_agent' => $this->fk_agent,
+            'bedroom' => $this->bedroom,
             'livingroom' => $this->livingroom,
             'parking' => $this->parking,
             'kitchen' => $this->kitchen,
@@ -75,7 +75,6 @@ class AdvertSearch extends Advert
 
         $query->andFilterWhere(['like', 'address', $this->address])
             ->andFilterWhere(['like', 'general_image', $this->general_image])
-            ->andFilterWhere(['like', 'advertcol', $this->advertcol])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'location', $this->location])
             ->andFilterWhere(['like', 'type', $this->type]);

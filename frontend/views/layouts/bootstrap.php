@@ -25,7 +25,7 @@ use yii\bootstrap\Nav;
 <!-- `//` означает что мы находимся в папке frontend/views-->
 <!-- render() belongs to the View class -->
 <?= $this->render("//common/head") ?>
-<?= __FILE__ ?>
+<?//= __FILE__ ?>
 <?= $content ?>
 
 <?=$this->render("//common/footer") ?>

@@ -37,5 +37,5 @@
         </ul>
     </div>
     <!-- #Header Starts -->
-    <?= __FILE__ ?>
+    <?//= __FILE__ ?>
 </div>
