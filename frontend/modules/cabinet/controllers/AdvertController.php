@@ -5,6 +5,7 @@ use common\controllers\AuthController;
 use Yii;
 use common\models\Advert;
 use common\models\Search\AdvertSearch;
+use yii\bootstrap\Alert;
 use yii\helpers\BaseFileHelper;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
@@ -56,18 +57,18 @@ class AdvertController extends AuthController
     public function actionFileUploadGeneral()
     {
         if (Yii::$app->request->isPost) {
-            $id = Yii::$app->request->post("advert_id");
-            $path = Yii::getAlias("@frontend/web/uploads/adverts/" . $id . "/general");
+            $idadvert = Yii::$app->request->post("advert_id");
+            $path = Yii::getAlias("@frontend/web/uploads/adverts/" . $idadvert . "/general");
             BaseFileHelper::createDirectory($path);
-            $model = Advert::findOne($id);
+            $model = Advert::findOne($idadvert);
             $model->scenario = 'step2';
             //
             $file = UploadedFile::getInstance($model, 'general_image');
             $name = 'general.' . $file->extension;
-            $file->saveAs($path . DIRECTORY_SEPARATOR . $name);
-            //
             $image = $path . DIRECTORY_SEPARATOR . $name;
-            $new_name = $path . DIRECTORY_SEPARATOR . "small_" . $name;
+            $file->saveAs($image);
+            //
+            $small_image = $path . DIRECTORY_SEPARATOR . "small_" . $name;
             //
             $model->general_image = $name;
             $model->save();
@@ -78,7 +79,7 @@ class AdvertController extends AuthController
             Image::frame($image, 0, '666', 0)
                 ->crop(new Point(0, 0), new Box($width, $height))
                 ->resize(new Box(1000, 644))
-                ->save($new_name, ['quality' => 100]);
+                ->save($small_image, ['quality' => 100]);
         }
 
         return true;
@@ -160,30 +161,33 @@ class AdvertController extends AuthController
 
     public function actionStep2()
     {
-        $id = Yii::$app->locator->cache->get('id');
-        $model = Advert::findOne($id);
-        $image = [];
-        if ($general_image = $model->general_image) {
-            $image[] = '<img src="/uploads/adverts/' . $model->idadvert . '/general/small_' . $general_image . '" width=250>';
-        }
+        $idadvert = Yii::$app->locator->cache->get('id');
+        $model = Advert::findOne($idadvert);
+        $images = [];
+        $images_add = [];
         if (Yii::$app->request->isPost) {
             $this->redirect(Url::to(['advert/']));
         }
-        $path = Yii::getAlias("@frontend/web/uploads/adverts/" . $model->idadvert);
-        $images_add = [];
-        try {
-            if (is_dir($path)) {
-                $files = FileHelper::findFiles($path);
-                foreach ($files as $file) {
-                    if (strstr($file, "small_") && !strstr($file, "general")) {
-                        $images_add[] = '<img src="/uploads/adverts/' . $model->idadvert . '/' . basename($file) . '" width=250>';
+        $general_image = $model->general_image;
+        if ($general_image !== null && $general_image !== "") {
+            $images[] = '<img src="/uploads/adverts/' . $model->idadvert . '/general/small_' . $general_image . '" width=213>';
+            $path = Yii::getAlias("@frontend/web/uploads/adverts/" . $model->idadvert);
+            $images_add = [];
+            try {
+                if (is_dir($path)) {
+                    $files = FileHelper::findFiles($path);
+                    foreach ($files as $file) {
+                        if (strstr($file, "small_") && !strstr($file, "general")) {
+                            $images_add[] = '<img src="/uploads/adverts/' . $model->idadvert . '/' . basename($file) . '" width=214>';
+                        }
                     }
                 }
+            } catch (Exception $e) {
             }
-        } catch (Exception $e) {
         }
 
-        return $this->render("step2", ['model' => $model, 'image' => $image, 'images_add' => $images_add]);
+        //        debug($images);
+        return $this->render("step2", ['model' => $model, 'images' => $images, 'images_add' => $images_add]);
     }
 
     /**
