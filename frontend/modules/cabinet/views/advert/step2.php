@@ -1,5 +1,6 @@
 <?php
 use yii\bootstrap\ActiveForm;
+use \kartik\file\FileInput;
 use \yii\helpers\Html;
 use \yii\helpers\Url;
 
@@ -7,7 +8,7 @@ $form = ActiveForm::begin(); ?>
 
     <div class="row">
         <?php
-        echo $form->field($model, 'general_image')->widget(\kartik\file\FileInput::classname(), [
+        echo $form->field($model, 'general_image')->widget(FileInput::classname(), [
             'options' => [
                 'accept' => 'image/*',
             ],
@@ -17,9 +18,10 @@ $form = ActiveForm::begin(); ?>
                     'advert_id' => $model->idadvert,
                 ],
                 'allowedFileExtensions' => ['jpg', 'png', 'gif'],
-                'initialPreview' => $image,
-                'showUpload' => true,
-                'showRemove' => true,
+                'initialPreview' => $images,
+                'showUpload' => false,
+                'showRemove' => false,
+                'showClose' => true,
                 'dropZoneEnabled' => false,
             ],
         ]);
@@ -29,7 +31,7 @@ $form = ActiveForm::begin(); ?>
     <div class="row">
         <?php
         echo Html::label('Images');
-        echo \kartik\file\FileInput::widget([
+        echo FileInput::widget([
             'name' => 'images',
             'options' => [
                 'accept' => 'image/*',
@@ -43,8 +45,9 @@ $form = ActiveForm::begin(); ?>
                 'overwriteInitial' => false,
                 'allowedFileExtensions' => ['jpg', 'png', 'gif'],
                 'initialPreview' => $images_add,
-                'showUpload' => true,
+                'showUpload' => false,
                 'showRemove' => false,
+                'showClose' => true,
                 'dropZoneEnabled' => false,
             ],
         ]);

@@ -16,7 +16,6 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $parking
  * @property integer $kitchen
  * @property string $general_image
- * @property string $advertcol     //
  * @property string $description
  * @property string $location
  * @property integer $hot
@@ -39,6 +38,7 @@ class Advert extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
+            // добавляет в модель Advert даты создания и обновления объявления
             TimestampBehavior::className(),
         ];
     }
@@ -62,7 +62,7 @@ class Advert extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['address'], 'string', 'max' => 255],
             [['location'], 'string', 'max' => 50],
-//            ['general_image', 'file', 'extensions' => ['jpg','png','gif']]
+            // ['general_image', 'file', 'extensions' => ['jpg','png','gif']]
         ];
     }
 
@@ -98,14 +98,18 @@ class Advert extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'fk_agent']);
     }
 
-    //beforeValidate
-    //afterValidate
-    //beforeSave
-    //afterSave
-    //beforeFind
-    //afterFind
+    // Готовые события в ActiveRecord
+    // событие срабатывает:
+    //    beforeValidate -  до валидации
+    //    afterValidate - после валидации
+    //    beforeSave - до сохранения в БД
+    //    afterSave - после сохранения в БД
+    //    beforeFind - до выборки
+    //    afterFind - после выборки
+
     public function afterValidate()
     {
+        // запомнить id пользователя, котрый добавил текущее обявление
         $this->fk_agent = Yii::$app->user->identity->id;
     }
 

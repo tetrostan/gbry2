@@ -1,5 +1,6 @@
 <?php
 use \frontend\components\Common;
+use \yii\helpers\Html;
 
 ?>
 <div class="">
@@ -12,12 +13,12 @@ use \frontend\components\Common;
                      data-slice1-scale="2" data-slice2-scale="2">
                     <div class="sl-slide-inner">
                         <div class="bg-img"
-                             style="background-image: url('<?= Common::getImageAdvert($row)[0] ?>')"></div>
+                             style="background-image: url('<?= Common::getImageAdvert($row)[0] ?>')">
+                        </div>
                         <h2><a href="#"><?= Common::getTitleAdvert($row) ?></a></h2>
                         <blockquote>
                             <p class="location">
-                                <span
-                                    class="glyphicon glyphicon-map-marker"></span>
+                                <span class="glyphicon glyphicon-map-marker"></span>
                                 <?= $row['address'] ?>
                             </p>
                             <p><?= Common::substr($row['description']) ?></p>
@@ -38,9 +39,7 @@ use \frontend\components\Common;
                 <?php endforeach; ?>
             <?php endif; ?>
         </nav>
-
     </div><!-- /slider-wrapper -->
-
 
     <div class="banner-search">
         <div class="container">
@@ -48,13 +47,13 @@ use \frontend\components\Common;
             <h3>Buy, Sale & Rent</h3>
             <div class="searchbar">
                 <div class="row">
-                    <?php echo \yii\helpers\Html::beginForm() ?>
+                    <?php echo Html::beginForm() ?>
                     <div class="col-lg-6 col-sm-6">
-                        <?php echo \yii\helpers\Html::textInput('search', '', ['class' => 'form-control', 'placeholder' => 'Search of Properties']) ?>
+                        <?php echo Html::textInput('search', '', ['class' => 'form-control', 'placeholder' => 'Search of Properties']) ?>
                         <div class="row">
                             <div class="col-lg-3 col-sm-3 ">
                                 <?php
-                                echo \yii\helpers\Html::dropDownList('buy', '', [
+                                echo Html::dropDownList('buy', '', [
                                     'Rent' => 'Rent',
                                     'Sale' => 'Sale',
                                 ], ['class' => 'form-control', 'prompt' => 'Buy'] // prompt - default value
@@ -63,7 +62,7 @@ use \frontend\components\Common;
                             </div>
                             <div class="col-lg-3 col-sm-4">
                                 <?php
-                                echo \yii\helpers\Html::dropDownList('buy', '', [
+                                echo Html::dropDownList('buy', '', [
                                     '$150,000 - $200,000' => '$150,000 - $200,000',
                                     '$200,000 - $250,000' => '$200,000 - $250,000',
                                     '$250,000 - $300,000' => '$250,000 - $300,000',
@@ -74,7 +73,7 @@ use \frontend\components\Common;
                             </div>
                             <div class="col-lg-3 col-sm-4">
                                 <?php
-                                echo \yii\helpers\Html::dropDownList('buy', '', [
+                                echo Html::dropDownList('buy', '', [
                                     'Apartment' => 'Apartment',
                                     'Building' => 'Building',
                                     'Office Space' => 'Office Space',
@@ -83,9 +82,9 @@ use \frontend\components\Common;
                                 ?>
                             </div>
                             <div class="col-lg-3 col-sm-4">
-                                <?php echo \yii\helpers\Html::submitButton('Find Now', ['class' => 'btn btn-success']) ?>
+                                <?php echo Html::submitButton('Find Now', ['class' => 'btn btn-success']) ?>
                             </div>
-                            <?php echo \yii\helpers\Html::endForm() ?>
+                            <?php echo Html::endForm() ?>
                         </div>
                     </div>
                     <div class="col-lg-5 col-lg-offset-1 col-sm-6 ">
