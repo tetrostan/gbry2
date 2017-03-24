@@ -53,6 +53,17 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'assetManager' => [
+            'bundles' => [
+                'dosamigos\google\maps\MapAsset' => [
+                    'options' => [
+                        'key' => 'AIzaSyBZvoXQaR5WQNojDugIO5wt3PplPRbLGh0',
+                        'language' => 'id',
+                        'version' => '3.1.18'
+                    ]
+                ]
+            ]
+        ],
         /**/
         'urlManager' => [
             'enablePrettyUrl' => true,
