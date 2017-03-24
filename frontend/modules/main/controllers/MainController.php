@@ -1,14 +1,22 @@
 <?php
 namespace app\modules\main\controllers;
 
+use common\models\Advert;
 use common\models\LoginForm;
+use frontend\components\Common;
+use frontend\filters\FilterAdvert;
 use frontend\models\ContactForm;
+use frontend\models\Image;
 use frontend\models\SignupForm;
-use yii\bootstrap\ActiveForm;
-use \yii\web\Controller;
+use yii\base\DynamicModel;
+use yii\data\Pagination;
 use yii\web\Response;
+use yii\widgets\ActiveForm;
+use dosamigos\google\maps\LatLng;
+use dosamigos\google\maps\Map;
+use dosamigos\google\maps\overlays\Marker;
 
-class MainController extends Controller
+class MainController extends \yii\web\Controller
 {
     public $layout = 'inner';
 
@@ -23,7 +31,45 @@ class MainController extends Controller
                 'class' => 'frontend\actions\TestAction',
                 // 'viewName' => 'test1',
             ],
+            'page' => [
+                'class' => 'yii\web\ViewAction',
+                'layout' => 'inner',
+            ],
         ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'only' => ['view-advert'],
+                'class' => FilterAdvert::className(),
+            ],
+        ];
+    }
+
+    public function actionFind($property = '', $price = '', $apartment = '')
+    {
+        $this->layout = 'sell';
+        $query = Advert::find();
+        $query->filterWhere(['like', 'address', $property])
+            ->orFilterWhere(['like', 'description', $property])
+            ->andFilterWhere(['type' => $apartment]);
+        if ($price) {
+            $prices = explode("-", $price);
+            if (isset($prices[0]) && isset($prices[1])) {
+                $query->andWhere(['between', 'price', $prices[0], $prices[1]]);
+            } else {
+                $query->andWhere(['>=', 'price', $prices[0]]);
+            }
+        }
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $pages->setPageSize(3);
+        $model = $query->offset($pages->offset)->limit($pages->limit)->all();
+        $request = \Yii::$app->request;
+
+        return $this->render("find", ['model' => $model, 'pages' => $pages, 'request' => $request]);
     }
 
     public function actionIndex()
@@ -34,11 +80,6 @@ class MainController extends Controller
     public function actionRegister()
     {
         $model = new SignupForm();
-        // 1 variant scenario
-        // $model = new SignupForm(['scenario' => 'short_register1']);
-        // 2 variant scenario
-        // $model = new SignupForm();
-        // $model->scenario = 'short_register1';
         if (\Yii::$app->request->isAjax && \Yii::$app->request->isPost) {
             if ($model->load(\Yii::$app->request->post())) {
                 \Yii::$app->response->format = Response::FORMAT_JSON;
@@ -47,9 +88,7 @@ class MainController extends Controller
             }
         }
         if ($model->load(\Yii::$app->request->post()) && $model->signup()) {
-            // print_r($model->getAttributes());
-            // die;
-            \Yii::$app->session->setflash('success', 'Register Success');
+            \Yii::$app->session->setFlash('success', 'Register Success');
         }
 
         return $this->render('register', ['model' => $model]);
@@ -67,7 +106,7 @@ class MainController extends Controller
 
     public function actionLogout()
     {
-        \Yii::$app->user->logout(); // user component contains own method logout()
+        \Yii::$app->user->logout();
 
         return $this->goHome();
     }
@@ -76,10 +115,61 @@ class MainController extends Controller
     {
         $model = new ContactForm();
         if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
+            $body = " <div>Body: <b> " . $model->body . " </b></div>";
+            $body .= " <div>Email: <b> " . $model->email . " </b></div>";
+            \Yii::$app->common->sendMail($model->subject, $body);
             print 'Send success';
             die();
         }
 
         return $this->render('contact', ['model' => $model]);
+    }
+
+    public function actionViewAdvert($id)
+    {
+        $model = Advert::findOne($id);
+        $data = ['name', 'email', 'text'];
+        $model_feedback = new DynamicModel($data);
+        $model_feedback->addRule('name', 'required');
+        $model_feedback->addRule('email', 'required');
+        $model_feedback->addRule('text', 'required');
+        $model_feedback->addRule('email', 'email');
+        if (\Yii::$app->request->isPost) {
+            if ($model_feedback->load(\Yii::$app->request->post()) && $model_feedback->validate()) {
+                print 'Message send';
+                die;
+                //                \Yii::$app->common->sendMail('Subject Advert', $model_feedback->text); // frontend/components/Common.php
+            }
+        }
+        $user = $model->user;
+        // in getImageAdvert param 2 to false ($general) - only additional pictures
+        $images = \frontend\components\Common::getImageAdvert($model, false);
+        $current_user = ['email' => '', 'username' => ''];
+        if (!\Yii::$app->user->isGuest) {
+            $current_user['email'] = \Yii::$app->user->identity->email;
+            $current_user['username'] = \Yii::$app->user->identity->username;
+        }
+        $coords = str_replace(['(', ')'], '', $model->location);
+        $coords = explode(',', $coords);
+        //        debug($coords); die;
+        $coord = new LatLng(['lat' => $coords[0], 'lng' => $coords[1]]);
+        $map = new Map([
+            'center' => $coord,
+            'zoom' => 15,
+        ]);
+        $marker = new Marker([
+            'position' => $coord,
+            'title' => Common::getTitleAdvert($model),
+        ]);
+        $map->addOverlay($marker);
+
+        return $this->render('view_advert', [
+            'model' => $model,
+            'model_feedback' => $model_feedback,
+            'user' => $user,
+            'images' => $images,
+            'current_user' => $current_user,
+            'map' => $map,
+        ]);
     }
 }
