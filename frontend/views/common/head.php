@@ -1,6 +1,5 @@
 <?php
-use yii\bootstrap\Nav;
-use \yii\helpers\Url;
+use \yii\bootstrap\Nav;
 
 ?>
 <!-- Header Starts -->
@@ -20,9 +19,9 @@ use \yii\helpers\Url;
             <div class="navbar-collapse  collapse">
                 <?php
                 $menuItems = [
-                    ['label' => 'Home', 'url' => Url::home()],
-                    ['label' => 'About', 'url' => '#'],
-                    ['label' => 'Contact', 'url' => Url::toRoute('/main/main/contact')],
+                    ['label' => 'Home', 'url' => '/'],
+                    ['label' => 'About', 'url' => ['/main/main/page', 'view' => 'about']],
+                    ['label' => 'Contact', 'url' => ['/main/main/page', 'view' => 'contact']],
                 ];
                 echo Nav::widget([
                     'options' => ['class' => 'navbar-nav navbar-right'],
@@ -38,14 +37,21 @@ use \yii\helpers\Url;
 <div class="container">
     <!-- Header Starts -->
     <div class="header">
-        <!-- <a href="index.html" ><img src="/images/logo.png"  alt="Realestate"></a> -->
-        <a href=<?php echo Url::home() ?>><img src="/images/logo.png" alt="Realestate"></a>
+        <a href="/"><img src="/images/logo.png" alt="Realestate"></a>
         <?php
-        $menuItems = [
-            ['label' => 'Buy', 'url' => '#'],
-            ['label' => 'Sale', 'url' => '#'],
-            ['label' => 'Rent', 'url' => '#'],
-        ];
+        $menuItems = [];
+        if (Yii::$app->user->isGuest) {
+            $menuItems[] = [
+                'label' => 'Login',
+                'url' => '#',
+                'linkOptions' => ['data-target' => '#loginpop', 'data-toggle' => "modal"],
+            ];
+        } else {
+            $menuItems[] = ['label' => 'Manager adverts', 'url' => ['/cabinet/advert']];
+            $menuItems[] = ['label' => 'Settings', 'url' => ['/cabinet/default/settings']];
+            $menuItems[] = ['label' => 'Change Password', 'url' => ['/cabinet/default/change-password']];
+            $menuItems[] = ['label' => 'Logout', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']];
+        }
         echo Nav::widget([
             'options' => ['class' => 'pull-right'],
             'items' => $menuItems,
