@@ -2,7 +2,6 @@
 namespace app\modules\cabinet\controllers;
 
 use common\controllers\AuthController;
-use Yii;
 use common\models\Advert;
 use common\models\Search\AdvertSearch;
 use yii\bootstrap\Alert;
@@ -17,6 +16,7 @@ use Imagine\Gd;
 use Imagine\Image\Box;
 use \yii\helpers\FileHelper;
 use \yii\base\Exception;
+use \yii\web\View;
 
 /**
  * AdvertController implements the CRUD actions for Advert model.
@@ -25,6 +25,11 @@ class AdvertController extends AuthController
 {
     public $layout = 'inner';
 
+
+    public function init(){
+        \Yii::$app->view->registerJsFile('http://maps.googleapis.com/maps/api/js?key=AIzaSyBZvoXQaR5WQNojDugIO5wt3PplPRbLGh0&sensor=false', ['position' => View::POS_HEAD]);
+    }
+
     /**
      * Lists all Advert models.
      * @return mixed
@@ -32,7 +37,7 @@ class AdvertController extends AuthController
     public function actionIndex()
     {
         $searchModel = new AdvertSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -56,9 +61,9 @@ class AdvertController extends AuthController
 
     public function actionFileUploadGeneral()
     {
-        if (Yii::$app->request->isPost) {
-            $idadvert = Yii::$app->request->post("advert_id");
-            $path = Yii::getAlias("@frontend/web/uploads/adverts/" . $idadvert . "/general");
+        if (\Yii::$app->request->isPost) {
+            $idadvert = \Yii::$app->request->post("advert_id");
+            $path = \Yii::getAlias("@frontend/web/uploads/adverts/" . $idadvert . "/general");
             BaseFileHelper::createDirectory($path);
             $model = Advert::findOne($idadvert);
             $model->scenario = 'step2';
@@ -87,9 +92,9 @@ class AdvertController extends AuthController
 
     public function actionFileUploadImages()
     {
-        if (Yii::$app->request->isPost) {
-            $id = Yii::$app->request->post("advert_id");
-            $path = Yii::getAlias("@frontend/web/uploads/adverts/" . $id);
+        if (\Yii::$app->request->isPost) {
+            $id = \Yii::$app->request->post("advert_id");
+            $path = \Yii::getAlias("@frontend/web/uploads/adverts/" . $id);
             BaseFileHelper::createDirectory($path);
             $file = UploadedFile::getInstanceByName('images');
             $name = time() . '.' . $file->extension;
@@ -121,7 +126,7 @@ class AdvertController extends AuthController
     public function actionCreate()
     {
         $model = new Advert();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['step2']);
         } else {
             return $this->render('create', [
@@ -150,7 +155,7 @@ class AdvertController extends AuthController
         }*/
         // 2 variant
         // $model = $this->findModel($id)->asArray();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['step2']);
         } else {
             return $this->render('update', [
@@ -161,17 +166,17 @@ class AdvertController extends AuthController
 
     public function actionStep2()
     {
-        $idadvert = Yii::$app->locator->cache->get('id');
+        $idadvert = \Yii::$app->locator->cache->get('id');
         $model = Advert::findOne($idadvert);
         $images = [];
         $images_add = [];
-        if (Yii::$app->request->isPost) {
+        if (\Yii::$app->request->isPost) {
             $this->redirect(Url::to(['advert/']));
         }
         $general_image = $model->general_image;
         if ($general_image !== null && $general_image !== "") {
             $images[] = '<img src="/uploads/adverts/' . $model->idadvert . '/general/small_' . $general_image . '" width=213>';
-            $path = Yii::getAlias("@frontend/web/uploads/adverts/" . $model->idadvert);
+            $path = \Yii::getAlias("@frontend/web/uploads/adverts/" . $model->idadvert);
             $images_add = [];
             try {
                 if (is_dir($path)) {
