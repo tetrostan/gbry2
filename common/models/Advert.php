@@ -1,7 +1,6 @@
 <?php
 namespace common\models;
 
-use Yii;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -110,12 +109,12 @@ class Advert extends \yii\db\ActiveRecord
     public function afterValidate()
     {
         // запомнить id пользователя, котрый добавил текущее обявление
-        $this->fk_agent = Yii::$app->user->identity->id;
+        $this->fk_agent = \Yii::$app->user->identity->id;
     }
 
     public function afterSave()
     {
-        Yii::$app->locator->cache->set('id', $this->idadvert);
+        \Yii::$app->locator->cache->set('id', $this->idadvert);
     }
 
     /**
