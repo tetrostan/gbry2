@@ -1,8 +1,8 @@
 <?php
-
 namespace common\models;
 
-use Yii;
+use \yii\db\ActiveRecord;
+use frontend\components\Common;
 
 /**
  * This is the model class for table "subscribe".
@@ -11,8 +11,23 @@ use Yii;
  * @property string $imail
  * @property string $date_subscribe
  */
-class Subscribe extends \yii\db\ActiveRecord
+class Subscribe extends ActiveRecord
 {
+    const EVENT_NOTIFICATION_ADMIN = 'new-notification-admin';
+
+    public function init()
+    {
+        $this->on(self::EVENT_NOTIFICATION_ADMIN, [$this, 'notification']);
+    }
+
+    public function notification($event)
+    {
+        $model = User::find()->where(['roles' => 'admin'])->all();
+        foreach ($model as $r) {
+            Common::sendMail('Notification', 'New subscribe', $r['email']);
+        }
+    }
+
     /**
      * @inheritdoc
      */
@@ -27,10 +42,10 @@ class Subscribe extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idsubscribe'], 'required'],
-            [['idsubscribe'], 'integer'],
             [['date_subscribe'], 'safe'],
-            [['imail'], 'string', 'max' => 50],
+            ['email', 'required'],
+            ['email', 'email'],
+            ['email', 'unique'],
         ];
     }
 
@@ -41,7 +56,7 @@ class Subscribe extends \yii\db\ActiveRecord
     {
         return [
             'idsubscribe' => 'Idsubscribe',
-            'imail' => 'Imail',
+            'email' => 'Email',
             'date_subscribe' => 'Date Subscribe',
         ];
     }
