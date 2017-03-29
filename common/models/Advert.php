@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use frontend\components\Common;
 use yii\behaviors\TimestampBehavior;
 
 /**
@@ -65,6 +66,11 @@ class Advert extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getTitle()
+    {
+        return Common::getTitleAdvert($this);
+    }
+
     /**
      * @inheritdoc
      */
@@ -105,7 +111,6 @@ class Advert extends \yii\db\ActiveRecord
     //    afterSave - после сохранения в БД
     //    beforeFind - до выборки
     //    afterFind - после выборки
-
     public function afterValidate()
     {
         // запомнить id пользователя, котрый добавил текущее обявление
