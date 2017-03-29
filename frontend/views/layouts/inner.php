@@ -42,7 +42,7 @@ use yii\bootstrap\Nav;
 <!-- banner -->
 <!-- banner -->
 <div class="container">
-    <div class="spacer">
+    <div class="properties-listing spacer">
         <?//= __FILE__ ?>
         <?= $content ?>
     </div>

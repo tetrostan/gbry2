@@ -5,19 +5,27 @@ $params = array_merge(
     require(__DIR__ . '/params.php'),
     require(__DIR__ . '/params-local.php')
 );
-
+// putenv("ADMIN_DOMAIN=http://backend.gbry2.loc");
 return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
-    'homeUrl' => '/admin',
-    'bootstrap' => ['log'],
     'controllerNamespace' => 'backend\controllers',
+    'bootstrap' => ['log'],
+//         'homeUrl' => '/admin',
+//         'defaultRoute' => '/admin',
     'modules' => [],
     'components' => [
-        'request' => [
-            'baseUrl' => '/admin',
+        /*'request' => [
+            'baseUrl' => '', // if '/admin' - css styles don't work
             'csrfParam' => '_csrf-backend',
-        ],
+        ],*/
+        /*'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@app/views' => '@vendor/dmstr/yii2-adminlte-asset/example-views/yiisoft/yii2-app'
+                ],
+            ],
+        ],*/
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
@@ -43,11 +51,9 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                // '' => 'site/login',
             ],
-        ],/*
-        'urlManagerFrontend' => [
-            // конфигурация менеджера URL из frontend
-        ],*/
+        ],
     ],
     'params' => $params,
 ];
