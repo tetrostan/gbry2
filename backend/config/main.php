@@ -5,20 +5,25 @@ $params = array_merge(
     require(__DIR__ . '/params.php'),
     require(__DIR__ . '/params-local.php')
 );
-// putenv("ADMIN_DOMAIN=http://backend.gbry2.loc");
 return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-//         'homeUrl' => '/admin',
-//         'defaultRoute' => '/admin',
     'modules' => [],
+    'on beforeAction' => function ($event) {
+        $loginUrl = yii\helpers\Url::to(Yii::$app->getUser()->loginUrl);
+        if (Yii::$app->user->isGuest && Yii::$app->getRequest()->url !== $loginUrl) {
+            Yii::$app->getResponse()->redirect($loginUrl)->send();
+
+            return;
+        }
+    },
     'components' => [
-        /*'request' => [
-            'baseUrl' => '', // if '/admin' - css styles don't work
+        'request' => [
             'csrfParam' => '_csrf-backend',
-        ],*/
+            //            'baseUrl' => '', // if '/admin' - css styles don't work
+        ],
         /*'view' => [
             'theme' => [
                 'pathMap' => [
@@ -51,7 +56,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                // '' => 'site/login',
+                'login' => '/site/login',
             ],
         ],
     ],
