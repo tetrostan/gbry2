@@ -16,7 +16,6 @@ use yii\bootstrap\Nav;
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
-        <?php echo __FILE__; ?>
         <!-- search form -->
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">

@@ -1,4 +1,4 @@
-<?
+<?php
 namespace frontend\components;
 
 use yii\base\Component;
