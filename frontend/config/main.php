@@ -6,7 +6,7 @@ $params = array_merge(
     require(__DIR__ . '/params-local.php')
 );
 // set custom alias
-// Yii::setAlias('@test', '@frontend/test');
+\Yii::setAlias('theme_view', '@frontend/themes/advert/views');
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
@@ -23,6 +23,13 @@ return [
         ],
     ],
     'components' => [
+        'view' => [
+            'theme' => [
+                'class' => 'frontend\themes\advert\Theme',
+                'basePath' => '@app/',
+                'baseUrl'  => '@web/',
+            ],
+        ],
         'request' => [
             'baseUrl' => '',
             'csrfParam' => '_csrf-frontend',
