@@ -5,6 +5,7 @@ use yii\helpers\Html;
 /* @var $this \yii\web\View */
 /* @var $content string */
 dmstr\web\AdminLteAsset::register($this);
+//debug(dmstr\web\AdminLteAsset::register($this));
 ?>
 <?php $this->beginPage() ?>
     <!DOCTYPE html>
@@ -16,7 +17,8 @@ dmstr\web\AdminLteAsset::register($this);
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body class="login-page">
+<!--    <body class="login-page">-->
+    <body class="<?= \dmstr\helpers\AdminLteHelper::skinClass() ?> login-page">
     <?php $this->beginBody() ?>
     <?= $content ?>
     <?php $this->endBody() ?>
