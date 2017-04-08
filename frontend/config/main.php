@@ -23,6 +23,22 @@ return [
         ],
     ],
     'components' => [
+        'mail' => [
+            'class'            => 'zyx\phpmailer\Mailer',
+            'viewPath'         => '@common/mail',
+            'useFileTransport' => false,
+            'config'           => [
+                'mailer'     => 'smtp',
+                'host'       => 'smtp.yandex.ua',
+                'port'       => '465',
+                'smtpsecure' => 'ssl',
+                'smtpauth'   => true,
+                'username'   => 'terlygin@yandex.ua',
+                'password'   => 'vmdsL8Ra79',
+                'ishtml'   => true,
+                'charset'   => 'UTF-8',
+            ],
+        ],
         'view' => [
             'theme' => [
                 'class' => 'frontend\themes\advert\Theme',
